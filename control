@@ -1,0 +1,12 @@
+Package: com.dcproducts.aefcubypass
+Name: AEFCUBypass
+Version: 1.0.0
+Architecture: iphoneos-arm
+Description: An awesome MobileSubstrate tweak!
+Maintainer: Derek Calabro
+Author: Derek Calabro
+Section: Tweaks
+Depends: mobilesubstrate (>= 0.9.5000)
+Depiction: https://dtcalabro.github.io/repo/depictions/?p=com.dcproducts.aefcubypass
+SileoDepiction: https://dtcalabro.github.io/repo/depictions/com.dcproducts.aefcubypass/depiction.json
+Icon: https://dtcalabro.github.io/repo/depictions/com.dcproducts.aefcubypass/icon.png

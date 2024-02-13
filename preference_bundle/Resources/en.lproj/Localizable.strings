@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- These are for the popup comfirmation prompts -->
+    <key>RESPRING</key>
+    <string>Respring</string>
+    <key>RESPRING_TITLE</key>
+    <string>Apply Settings?</string>
+    <key>RESPRING_MESSAGE</key>
+    <string>This will respring your device.</string>
+    <key>RESET</key>
+    <string>Reset</string>
+    <key>RESET_TITLE</key>
+    <string>Reset All Settings?</string>
+    <key>RESET_MESSAGE</key>
+    <string>This will reset all settings back to their default state. WARNING: This cannot be undone!</string>
+    <key>CANCEL</key>
+    <string>Cancel</string>
+    <key>SUBMIT</key>
+    <string>Submit</string>
+    <key>CONTINUE</key>
+    <string>Continue</string>
+    <key>OPTIONS</key>
+    <string>Options</string>
+    <key>RESET_ALL_SETTINGS</key>
+    <string>Reset All Settings</string>
+</dict>
+</plist>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>TWEAK_SETTINGS</string>
+			<key>footerText</key>
+			<string>TWEAK_SETTINGS_FOOTER</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.dcproducts.aefcubypassprefs</string>
+			<key>key</key>
+			<string>isEnabled</string>
+			<key>label</key>
+			<string>ENABLE</string>
+			<key>PostNotification</key>
+			<string>com.dcproducts.aefcubypass/ReloadPrefs</string>
+		</dict>
+
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>DEVELOPMENT_SETTINGS</string>
+			<key>footerText</key>
+			<string>DEVELOPMENT_SETTINGS_FOOTER</string>
+			<key>developmentOnly</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>detail</key>
+			<string>AEFCUBSubListController</string>
+			<key>label</key>
+			<string>DEVELOPMENT_SETTINGS</string>
+			<key>AEFCUBSub</key>
+			<string>Development</string>
+			<key>developmentOnly</key>
+			<true/>
+		</dict>
+
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>DONATE</string>
+			<key>footerText</key>
+			<string>DONATE_FOOTER</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>cellClass</key>
+			<string>AEFCUBTintedButton</string>
+			<key>label</key>
+			<string>DONATE_VIA_PAYPAL</string>
+			<key>action</key>
+			<string>paypal</string>
+			<key>icon</key>
+			<string>light-mode/paypal.png</string>
+		</dict>
+
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>SUPPORT</string>
+			<key>footerText</key>
+			<string>SUPPORT_FOOTER</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>cellClass</key>
+			<string>AEFCUBTintedButton</string>
+			<key>label</key>
+			<string>BUG_REPORT</string>
+			<key>action</key>
+			<string>bugReport</string>
+			<key>icon</key>
+			<string>light-mode/bug-report.png</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>cellClass</key>
+			<string>AEFCUBTintedButton</string>
+			<key>label</key>
+			<string>FEATURE_REQUEST</string>
+			<key>action</key>
+			<string>featureRequest</string>
+			<key>icon</key>
+			<string>light-mode/feature-request.png</string>
+		</dict>
+
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>LINKS</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>cellClass</key>
+			<string>AEFCUBTintedButton</string>
+			<key>label</key>
+			<string>GITHUB</string>
+			<key>action</key>
+			<string>github</string>
+			<key>icon</key>
+			<string>light-mode/github.png</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>cellClass</key>
+			<string>AEFCUBTintedButton</string>
+			<key>label</key>
+			<string>TWITTER</string>
+			<key>action</key>
+			<string>twitter</string>
+			<key>icon</key>
+			<string>light-mode/twitter.png</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>cellClass</key>
+			<string>AEFCUBTintedButton</string>
+			<key>label</key>
+			<string>DISCORD</string>
+			<key>action</key>
+			<string>discord</string>
+			<key>icon</key>
+			<string>light-mode/discord.png</string>
+		</dict>
+		
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>BOTTOM_FOOTER</string>
+			<key>footerAlignment</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>AEFCUBypass</string>
+</dict>
+</plist>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Used for switches -->
+    <key>ENABLE</key>
+    <string>Enable</string>
+    <key>DISABLE</key>
+    <string>Disable</string>
+    
+    <!-- Used for color picker -->
+    <key>COLOR</key>
+    <string>Color</string>
+
+    <!-- These are at the top of the pane -->
+    <key>TWEAK_SETTINGS</key>
+    <string>Tweak Settings</string>
+    <key>TWEAK_SETTINGS_FOOTER</key>
+    <string>Some changes may need a respring before taking effect.</string>
+    <key>RESET</key>
+    <string>Reset All Settings</string>
+    <key>RESPRING</key>
+    <string>Respring</string>
+
+    <!-- This is the development section (only for development builds) -->
+    <key>DEVELOPMENT_SETTINGS</key>
+    <string>Development Settings</string>
+    <key>DEVELOPMENT_SETTINGS_FOOTER</key>
+    <string>These are the development settings for use with development builds.</string>
+
+    <!-- This is the donate section -->
+    <key>DONATE</key>
+    <string>Donate</string>
+    <key>DONATE_VIA_PAYPAL</key>
+    <string>Donate via PayPal</string>
+    <key>DONATE_FOOTER</key>
+    <string>Enjoying the tweak? Please consider donating so I can make even cooler tweaks!</string>
+
+    <!-- This is the support section -->
+    <key>SUPPORT</key>
+    <string>Support</string>
+    <key>BUG_REPORT</key>
+    <string>Bug Report</string>
+    <key>FEATURE_REQUEST</key>
+    <string>Feature Request</string>
+    <key>SUPPORT_FOOTER</key>
+    <string>Found a bug or have a feature request? File a support ticket so I can look into it as soon as possible!</string>
+
+    <!-- This is the links section -->
+    <key>LINKS</key>
+    <string>Links</string>
+    <key>GITHUB</key>
+    <string>Check out my GitHub</string>
+    <key>TWITTER</key>
+    <string>Follow me on Twitter</string>
+    <key>DISCORD</key>
+    <string>Message me on Discord</string>
+    
+    <!-- This is the very bottom footer text -->
+    <key>BOTTOM_FOOTER</key>
+    <string>AEFCUBypass v1.0.0-dev
+
+
+Developed by Derek Calabro
+© 2023 Derek Calabro</string>
+
+</dict>
+</plist>
