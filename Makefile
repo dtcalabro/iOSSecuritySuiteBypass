@@ -1,4 +1,4 @@
-TWEAK_NAME = AEFCUBypass
+TWEAK_NAME = iOSSecuritySuiteBypass
 
 $(TWEAK_NAME)_FILES = Tweak.xm
 $(TWEAK_NAME)_CFLAGS = -fobjc-arc
@@ -27,33 +27,33 @@ include $(THEOS)/makefiles/common.mk
 ##################################
 ##########     NOTE     ##########
 ################################## \
-If the current build is a production build, the AEFCUB_DEBUG variable will be ignored and just overwritten.\
+If the current build is a production build, the ISSB_DEBUG variable will be ignored and just overwritten.\
 This way production builds won't get built with debug output enabled by accident. \
-If the current build is not a production build, the AEFCUB_DEBUG variable will be passed to the compiler.
+If the current build is not a production build, the ISSB_DEBUG variable will be passed to the compiler.
 ifeq ($(FINALPACKAGE), 1)
-	$(TWEAK_NAME)_CFLAGS += -DAEFCUB_DEBUG=0
+	$(TWEAK_NAME)_CFLAGS += -DISSB_DEBUG=0
 else
-	$(TWEAK_NAME)_CFLAGS += -DAEFCUB_DEBUG="$(DEBUG)"
+	$(TWEAK_NAME)_CFLAGS += -DISSB_DEBUG="$(DEBUG)"
 endif
 
-ifeq ($(DEBUG), 1) 
+ifeq ($(DEBUG), 1)
 	ifeq ($(FINALPACKAGE), 0)
 		$(TWEAK_NAME)_CFLAGS += -Wno-unused-variable -Wno-unused-function
 	endif
 endif
 
 include $(THEOS_MAKE_PATH)/tweak.mk
-SUBPROJECTS += preference_bundle
+#SUBPROJECTS += preference_bundle
 include $(THEOS_MAKE_PATH)/aggregate.mk
 
 ifeq ($(ROOTLESS), 1)
 	ifeq ($(SIM_BUILD), 0)
-after-$(TWEAK_NAME)-stage::
+#after-$(TWEAK_NAME)-stage::
 #@echo "[*] Fixing up framework and library paths which now will use rpath and self-signing again so iOS can fuck off"
 #install_name_tool -change /usr/lib/libcolorpicker.dylib "@rpath/libcolorpicker.dylib" $(THEOS_STAGING_DIR)$(LOCAL_INSTALL_PATH)/$(TWEAK_NAME).dylib
 #ldid -S $(THEOS_STAGING_DIR)$(LOCAL_INSTALL_PATH)/$(TWEAK_NAME).dylib
 	endif
 endif
 
-# sudo rm -rf /opt/simject/AEFCUBypass.dylib && resim && sudo cp .theos/obj/iphone_simulator/debug/arm64/AEFCUBypass.dylib /opt/simject && resim
-# sudo rm -rf /opt/simject-prefs/AEFCUBypassPrefs.bundle && sudo cp -r .theos/obj/iphone_simulator/debug/AEFCUBypassPrefs.bundle /opt/simject-prefs && sudo cp .theos/obj/iphone_simulator/debug/arm64/AEFCUBypassPrefs.bundle/AEFCUBypassPrefs /opt/simject-prefs/AEFCUBypassPrefs.bundle && resim
+# sudo rm -rf /opt/simject/iOSSecuritySuiteBypass.dylib && resim && sudo cp .theos/obj/iphone_simulator/debug/arm64/iOSSecuritySuiteBypass.dylib /opt/simject && resim
+# sudo rm -rf /opt/simject-prefs/iOSSecuritySuiteBypassPrefs.bundle && sudo cp -r .theos/obj/iphone_simulator/debug/iOSSecuritySuiteBypassPrefs.bundle /opt/simject-prefs && sudo cp .theos/obj/iphone_simulator/debug/arm64/iOSSecuritySuiteBypassPrefs.bundle/iOSSecuritySuiteBypassPrefs /opt/simject-prefs/iOSSecuritySuiteBypassPrefs.bundle && resim

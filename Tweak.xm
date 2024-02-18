@@ -3,6 +3,8 @@
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 #include <unistd.h>
+//#include "IntegrityChecker.h"
+#include <substrate.h>
 
 #import "HBLog.h"
 
@@ -18,10 +20,10 @@
 #define ROOT_PATH_C_VAR(cPath) (ROOT_PATH_NS([NSString stringWithUTF8String:cPath]).fileSystemRepresentation)
 
 #define debug_log(...) ({\
-	if (AEFCUB_DEBUG) {\
+	if (ISSB_DEBUG) {\
 		char* str; \
 		asprintf(&str, __VA_ARGS__); \
-		os_log(OS_LOG_DEFAULT, "[AEFCUB_DEBUG] %s", str); \
+		os_log(OS_LOG_DEFAULT, "[ISSB_DEBUG] %s", str); \
 	}\
 })
 
@@ -34,26 +36,45 @@
 // Global variables
 BOOL enabled = TRUE;
 
-@interface AEFCUBHelper : NSObject
-- (id)AEFCUBReadPreferenceValue:(NSString *)key;
-- (id)AEFCUBReadPreferenceValue:(NSString *)key fallbackValue:(id)value;
-- (id)AEFCUBReadArrayPreferenceValue:(NSString *)key;
-- (id)AEFCUBReadDatePreferenceValue:(NSString *)key;
-- (BOOL)AEFCUBReadBooleanPreferenceValue:(NSString *)key fallbackValue:(id)value;
-- (id)AEFCUBReadColorPreferenceValue:(NSString *)key fallbackValue:(id)value;
-- (id)AEFCUBReadStringPreferenceValue:(NSString *)key fallbackValue:(id)value;
-- (void)AEFCUBWritePreferenceValue:(id)object forKey:(NSString *)key;
-- (void)AEFCUBRemovePreferenceValue:(NSString *)key;
-- (void)AEFCUBRemovePreferenceDomain;
-- (BOOL)AEFCUBDoesPreferenceDomainExist; // Don't believe is working
-- (BOOL)AEFCUBDoesPreferenceValueExist:(NSString *)key;
+@interface ISSBHelper : NSObject
+- (id)ISSBReadPreferenceValue:(NSString *)key;
+- (id)ISSBReadPreferenceValue:(NSString *)key fallbackValue:(id)value;
+- (id)ISSBReadArrayPreferenceValue:(NSString *)key;
+- (id)ISSBReadDatePreferenceValue:(NSString *)key;
+- (BOOL)ISSBReadBooleanPreferenceValue:(NSString *)key fallbackValue:(id)value;
+- (id)ISSBReadColorPreferenceValue:(NSString *)key fallbackValue:(id)value;
+- (id)ISSBReadStringPreferenceValue:(NSString *)key fallbackValue:(id)value;
+- (void)ISSBWritePreferenceValue:(id)object forKey:(NSString *)key;
+- (void)ISSBRemovePreferenceValue:(NSString *)key;
+- (void)ISSBRemovePreferenceDomain;
+- (BOOL)ISSBDoesPreferenceDomainExist; // Don't believe is working
+- (BOOL)ISSBDoesPreferenceValueExist:(NSString *)key;
 @end
 
-AEFCUBHelper *helper;
+ISSBHelper *helper;
 
-@implementation AEFCUBHelper
-- (id)AEFCUBReadPreferenceValue:(NSString *)key {
-    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"];
+static BOOL (*orig_amIJailbroken)(void);
+
+BOOL hook_amIJailbroken(void) {
+    //NSLog(@"Hooked amIJailbroken()");
+
+    /*
+    if (!enabled) {
+        NSLog(@"Returning original amIJailbroken()");
+        return orig_amIJailbroken();
+    } else {
+        // Always return NO
+        return NO;
+    }
+    */
+
+    // Always return NO
+    return NO;
+}
+
+@implementation ISSBHelper
+- (id)ISSBReadPreferenceValue:(NSString *)key {
+    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 
 	if ([prefsDict objectForKey:key] != nil) {
 		return [prefsDict objectForKey:key];
@@ -62,8 +83,8 @@ AEFCUBHelper *helper;
 	}
 }
 
-- (id)AEFCUBReadPreferenceValue:(NSString *)key fallbackValue:(id)value {
-    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"];
+- (id)ISSBReadPreferenceValue:(NSString *)key fallbackValue:(id)value {
+    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 
 	if ([prefsDict objectForKey:key] != nil) {
 		return [prefsDict objectForKey:key];
@@ -72,8 +93,8 @@ AEFCUBHelper *helper;
 	}
 }
 
-- (id)AEFCUBReadArrayPreferenceValue:(NSString *)key {
-    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"];
+- (id)ISSBReadArrayPreferenceValue:(NSString *)key {
+    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 
 	if ([prefsDict objectForKey:key] != NULL) {
 		return [prefsDict objectForKey:key];
@@ -82,8 +103,8 @@ AEFCUBHelper *helper;
 	}
 }
 
-- (id)AEFCUBReadDatePreferenceValue:(NSString *)key {
-    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"];
+- (id)ISSBReadDatePreferenceValue:(NSString *)key {
+    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 
 	if ([prefsDict objectForKey:key] != NULL) {
 		return [prefsDict objectForKey:key];
@@ -92,8 +113,8 @@ AEFCUBHelper *helper;
 	}
 }
 
-- (BOOL)AEFCUBReadBooleanPreferenceValue:(NSString *)key fallbackValue:(id)value {
-    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"];
+- (BOOL)ISSBReadBooleanPreferenceValue:(NSString *)key fallbackValue:(id)value {
+    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 
 	if ([prefsDict objectForKey:key] != NULL) {
 		return [[prefsDict objectForKey:key] boolValue];
@@ -102,8 +123,8 @@ AEFCUBHelper *helper;
 	}
 }
 
-- (id)AEFCUBReadColorPreferenceValue:(NSString *)key fallbackValue:(id)value {
-    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"];
+- (id)ISSBReadColorPreferenceValue:(NSString *)key fallbackValue:(id)value {
+    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 
 	if ([prefsDict objectForKey:key] != NULL) {
 		return [prefsDict objectForKey:key];
@@ -112,8 +133,8 @@ AEFCUBHelper *helper;
 	}
 }
 
-- (id)AEFCUBReadStringPreferenceValue:(NSString *)key fallbackValue:(id)value {
-    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"];
+- (id)ISSBReadStringPreferenceValue:(NSString *)key fallbackValue:(id)value {
+    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 
 	if ([prefsDict objectForKey:key] != NULL) {
 		return [prefsDict objectForKey:key];
@@ -122,8 +143,8 @@ AEFCUBHelper *helper;
 	}
 }
 
-- (id)AEFCUBReadIntegerPreferenceValue:(NSString *)key fallbackValue:(id)value {
-    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"];
+- (id)ISSBReadIntegerPreferenceValue:(NSString *)key fallbackValue:(id)value {
+    NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 
 	if ([prefsDict objectForKey:key] != NULL) {
 		return [prefsDict objectForKey:key];
@@ -132,28 +153,28 @@ AEFCUBHelper *helper;
 	}
 }
 
-- (void)AEFCUBWritePreferenceValue:(id)object forKey:(NSString *)key {
-	NSMutableDictionary *prefsDict = [[[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"] mutableCopy];
+- (void)ISSBWritePreferenceValue:(id)object forKey:(NSString *)key {
+	NSMutableDictionary *prefsDict = [[[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"] mutableCopy];
 
 	[prefsDict setObject:object forKey:key];
 
-	[[NSUserDefaults standardUserDefaults] setPersistentDomain:prefsDict forName:@"com.dcproducts.aefcubypassprefs"];
+	[[NSUserDefaults standardUserDefaults] setPersistentDomain:prefsDict forName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 }
 
-- (void)AEFCUBRemovePreferenceValue:(NSString *)key {
-	NSMutableDictionary *prefsDict = [[[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"] mutableCopy];
+- (void)ISSBRemovePreferenceValue:(NSString *)key {
+	NSMutableDictionary *prefsDict = [[[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"] mutableCopy];
 
 	[prefsDict removeObjectForKey:key];
 
-	[[NSUserDefaults standardUserDefaults] setPersistentDomain:prefsDict forName:@"com.dcproducts.aefcubypassprefs"];
+	[[NSUserDefaults standardUserDefaults] setPersistentDomain:prefsDict forName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 }
 
-- (void)AEFCUBRemovePreferenceDomain {
-	[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:@"com.dcproducts.aefcubypassprefs"];
+- (void)ISSBRemovePreferenceDomain {
+	[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 }
 
-- (BOOL)AEFCUBDoesPreferenceDomainExist {
-	NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"];
+- (BOOL)ISSBDoesPreferenceDomainExist {
+	NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 	if (prefsDict) {
 		return TRUE;
 	} else {
@@ -161,8 +182,8 @@ AEFCUBHelper *helper;
 	}
 }
 
-- (BOOL)AEFCUBDoesPreferenceValueExist:(NSString *)key {
-	NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"];
+- (BOOL)ISSBDoesPreferenceValueExist:(NSString *)key {
+	NSDictionary *prefsDict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"];
 	
 	if ([prefsDict objectForKey:key] != NULL) {
 		return TRUE;
@@ -172,45 +193,63 @@ AEFCUBHelper *helper;
 }
 @end
 
-static void AEFCUBReloadPrefs() {
-	debug_log("AEFCUBReloadPrefs called!");
+/*
+static void ISSBReloadPrefs() {
+	debug_log("ISSBReloadPrefs called!");
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		// Global toggle
-		enabled = [helper AEFCUBReadBooleanPreferenceValue:@"isEnabled" fallbackValue:@YES];
+		enabled = [helper ISSBReadBooleanPreferenceValue:@"isEnabled" fallbackValue:@YES];
 		debug_log("enabled --> %i", enabled);
 
-		if (AEFCUB_DEBUG) {
-			debug_log("NSUserDefaults dump: %s", [[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.aefcubypassprefs"]] UTF8String]);
+		if (ISSB_DEBUG) {
+			debug_log("NSUserDefaults dump: %s", [[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.dcproducts.iossecuritysuitebypassprefs"]] UTF8String]);
 		}
 	});
 }
 
-static void AEFCUBReset() {
-	debug_log("AEFCUBReset called!");
-	[helper AEFCUBWritePreferenceValue:@YES forKey:@"isEnabled"];
+static void ISSBReset() {
+	debug_log("ISSBReset called!");
+	[helper ISSBWritePreferenceValue:@YES forKey:@"isEnabled"];
 }
 
-void AEFCUBPrefsCheck() {
-	debug_log("AEFCUBPrefsCheck called!");
+void ISSBPrefsCheck() {
+	debug_log("ISSBPrefsCheck called!");
 
-	if (![helper AEFCUBDoesPreferenceValueExist:@"isEnabled"]) {
+	if (![helper ISSBDoesPreferenceValueExist:@"isEnabled"]) {
 		debug_log("isEnabled = NULL");
-		[helper AEFCUBWritePreferenceValue:@YES forKey:@"isEnabled"];
+		[helper ISSBWritePreferenceValue:@YES forKey:@"isEnabled"];
 	}
 }
 
-void AEFCUBRespring() {
-	debug_log("AEFCUBRespring called!");
+void ISSBRespring() {
+	debug_log("ISSBRespring called!");
 	[[%c(FBSystemService) sharedInstance] exitAndRelaunch:YES];
 }
+*/
+
+/*
+BOOL isSpringBoard() {
+    NSString *processName = [[NSProcessInfo processInfo] processName];
+    return [processName isEqualToString:@"SpringBoard"];
+}
+*/
 
 %ctor {
-	helper = [[AEFCUBHelper alloc] init];
+	//helper = [[ISSBHelper alloc] init];
 
-	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)AEFCUBRespring, CFSTR("com.dcproducts.aefcubypass/Respring"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
-	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)AEFCUBReloadPrefs, CFSTR("com.dcproducts.aefcubypass/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorCoalesce);
-	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)AEFCUBReset, CFSTR("com.dcproducts.aefcubypass/Reset"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
+    //ISSBPrefsCheck();
+    //ISSBReloadPrefs();
 
-	AEFCUBPrefsCheck();
-	AEFCUBReloadPrefs();
+    //if (isSpringBoard()) {
+        // Register for notifications
+	//    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)ISSBRespring, CFSTR("com.dcproducts.iOSSecuritySuiteBypass/Respring"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
+	//    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)ISSBReloadPrefs, CFSTR("com.dcproducts.iOSSecuritySuiteBypass/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+	//    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)ISSBReset, CFSTR("com.dcproducts.iOSSecuritySuiteBypass/Reset"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
+    //} else {
+        // Hook amIJailbroken
+        // _$s16IOSSecuritySuiteAAC13amIJailbrokenSbyFZ
+        void* amIJailbroken = MSFindSymbol(NULL, "_$s16IOSSecuritySuiteAAC13amIJailbrokenSbyFZ");
+        if (amIJailbroken)
+            MSHookFunction(amIJailbroken, (void *)hook_amIJailbroken, (void **)&orig_amIJailbroken);
+    //}
 }
